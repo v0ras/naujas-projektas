@@ -53,30 +53,25 @@ $(document).ready(function () {
     y1 = parseFloat(y1);
     x2 = parseFloat(x2);
     y2 = parseFloat(y2);
-    console.log(x1, y1, x2, y2);
     createLine(x1, y1, x2, y2, line);
 
     var lineCordinates = { x1, y1, x2, y2 };
     lineArray.push(lineCordinates);
 
-    var objCount = lineArray.length;
-    if (objCount < 2) {
-      createLine();
-    } else lineIntersect();
+    lineIntersect();
     function lineIntersect() {
       for (let i = 0; i < lineArray.length; i++) {
         const line1 = lineCordinates;
         const line2 = lineArray[i];
-        console.log(line2);
-        const x3 = line2.x1;
-        const y3 = line2.y1;
-        const x4 = line2.x2;
-        const y4 = line2.y2;
-
+        console.table(lineArray);
         const x1 = line1.x1;
         const y1 = line1.y1;
         const x2 = line1.x2;
         const y2 = line1.y2;
+        const x3 = line2.x1;
+        const y3 = line2.y1;
+        const x4 = line2.x2;
+        const y4 = line2.y2;
 
         var x =
           ((x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4)) /
@@ -124,7 +119,7 @@ $(document).ready(function () {
             }
           }
         }
-        $("<canvas />")
+        $("<div />")
           .addClass("taskas")
           .css({
             left: x,
@@ -132,65 +127,6 @@ $(document).ready(function () {
           })
           .appendTo("#container");
       }
-
     }
   });
-
-  
-  
-
-  jQuery.fn.getPos = function () {
-    var o = this[0];
-    var left = 0,
-      top = 0,
-      parentNode = null,
-      offsetParent = null;
-    offsetParent = o.offsetParent;
-    var original = o;
-    var el = o;
-    while (el.parentNode != null) {
-      el = el.parentNode;
-      if (el.offsetParent != null) {
-        var considerScroll = true;
-        if (window.opera) {
-          if (el == original.parentNode || el.nodeName == "TR") {
-            considerScroll = false;
-          }
-        }
-        if (considerScroll) {
-          if (el.scrollTop && el.scrollTop > 0) {
-            top -= el.scrollTop;
-          }
-          if (el.scrollLeft && el.scrollLeft > 0) {
-            left -= el.scrollLeft;
-          }
-        }
-      }
-      if (el == offsetParent) {
-        left += o.offsetLeft;
-        if (el.clientLeft && el.nodeName != "TABLE") {
-          left += el.clientLeft;
-        }
-        top += o.offsetTop;
-        if (el.clientTop && el.nodeName != "TABLE") {
-          top += el.clientTop;
-        }
-        o = el;
-        if (o.offsetParent == null) {
-          if (o.offsetLeft) {
-            left += o.offsetLeft;
-          }
-          if (o.offsetTop) {
-            top += o.offsetTop;
-          }
-        }
-        offsetParent = o.offsetParent;
-      }
-    }
-    return {
-      left: left,
-      top: top,
-    };
-  };
 });
-
